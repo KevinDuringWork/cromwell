@@ -20,7 +20,7 @@ object MachineConstraints {
       val customMachineType =
         cpuPlatformOption match {
           case Some(PipelinesApiRuntimeAttributes.CpuPlatformIntelCascadeLakeValue) => N2CustomMachineType
-          case Some(PipelinesApiRuntimeAttributes.CpuPlatformIntelAMDRomeValue)     => N2DCustomMachineType
+          case Some(PipelinesApiRuntimeAttributes.CpuPlatformAMDRomeValue)          => N2DCustomMachineType
           case _ => N1CustomMachineType
         }
       customMachineType.machineType(memory, cpu, jobLogger)
