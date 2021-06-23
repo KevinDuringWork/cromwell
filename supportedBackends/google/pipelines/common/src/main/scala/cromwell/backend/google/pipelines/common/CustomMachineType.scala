@@ -164,9 +164,9 @@ case object N2DCustomMachineType extends CustomMachineType {
   override val vmTypePrefix: String = "n2d-"
   override val minMemoryPerCpu: MemorySize = MemorySize(0.5, MemoryUnit.GB)
   override val maxMemoryPerCpu: MemorySize = MemorySize(8.0, MemoryUnit.GB)
-
+  override val memoryFactor: MemorySize = MemorySize(256, MemoryUnit.MB)
+  
   override def validateCpu(cpu: Refined[Int, Positive]): Int = {
-    // https://cloud.google.com/compute/docs/machine-types#n2d_custom_machine_types
     cpu.value match {
       case cpu if Set(2, 4 ,8, 16).contains(cpu) => cpu 
       case cpu if cpu > 16 && cpu <= 96 && cpu % 16 == 0 => cpu
