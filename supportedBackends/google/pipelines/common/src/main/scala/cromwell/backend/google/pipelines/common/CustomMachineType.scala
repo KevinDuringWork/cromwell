@@ -160,7 +160,7 @@ case object N2CustomMachineType extends CustomMachineType {
   }
 }
 
-case object N2CustomMachineType extends CustomMachineType {
+case object N2DCustomMachineType extends CustomMachineType {
   override val vmTypePrefix: String = "n2d-"
   override val minMemoryPerCpu: MemorySize = MemorySize(0.5, MemoryUnit.GB)
   override val maxMemoryPerCpu: MemorySize = MemorySize(8.0, MemoryUnit.GB)
