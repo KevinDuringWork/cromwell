@@ -169,7 +169,7 @@ case object N2DCustomMachineType extends CustomMachineType {
   
   override def validateCpu(cpu: Refined[Int, Positive]): Int = {
     cpu.value match {
-      case cpu if cpu <= 16 => max(2, pow(2, ceil(log(cpu)/log(2))).toInt)
+      case cpu if cpu <= 16 => max(2, pow(2, ceil(log(cpu.toDouble)/log(2))).toInt)
       case cpu if cpu > 16 && cpu <= 96 && cpu % 16 == 0 => cpu
       case cpu if cpu > 16 && cpu <= 96 => cpu + 16 - (cpu % 16)
       case cpu if cpu > 96 => 96
