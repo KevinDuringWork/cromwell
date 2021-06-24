@@ -8,6 +8,7 @@ import mouse.all._
 import org.slf4j.Logger
 import wdl4s.parser.MemoryUnit
 import wom.format.MemorySize
+import math.{ceil, log, pow, max}
 
 /**
   * Adjusts memory and cpu for custom machine types.
@@ -168,8 +169,10 @@ case object N2DCustomMachineType extends CustomMachineType {
   
   override def validateCpu(cpu: Refined[Int, Positive]): Int = {
     cpu.value match {
-      case cpu if Set(2, 4 ,8, 16).contains(cpu) => cpu 
+      case cpu if cpu <= 16 => max(2, pow(2, ceil(log(cpu)/log(2))).toInt)
       case cpu if cpu > 16 && cpu <= 96 && cpu % 16 == 0 => cpu
+      case cpu if cpu > 16 && cpu <= 96 => cpu + 16 - (cpu % 16)
+      case cpu if cpu > 96 => 96
     }
   }
 
