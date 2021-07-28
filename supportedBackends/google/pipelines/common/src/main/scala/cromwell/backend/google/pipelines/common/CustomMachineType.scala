@@ -8,7 +8,7 @@ import mouse.all._
 import org.slf4j.Logger
 import wdl4s.parser.MemoryUnit
 import wom.format.MemorySize
-import math.{ceil, log, pow, max}
+import math.{log, pow}
 
 /**
   * Adjusts memory and cpu for custom machine types.
