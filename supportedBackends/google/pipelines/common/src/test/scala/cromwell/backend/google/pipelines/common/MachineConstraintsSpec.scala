@@ -52,15 +52,16 @@ class MachineConstraintsSpec extends AnyFlatSpec with CromwellTimeoutSpec with M
       (MemorySize(2, MemoryUnit.GB), refineMV[Positive](33), None, true, "predefined-33-2048"),
 
       // Same tests but with cascade lake (n2)
-      (MemorySize(1024, MemoryUnit.MB), refineMV[Positive](1), n2Option, false, "n2-custom-2-2048"),
+      (MemorySize(1024, MemoryUnit.MB), refineMV[Positive](1), n2Option, false, "n2-custom-2-1024"),
       (MemorySize(4, MemoryUnit.GB), refineMV[Positive](3), n2Option, false, "n2-custom-4-4096"),
-      (MemorySize(1, MemoryUnit.GB), refineMV[Positive](1), n2Option, false, "n2-custom-2-2048"),
-      (MemorySize(1, MemoryUnit.GB), refineMV[Positive](4), n2Option, false, "n2-custom-4-4096"),
-      (MemorySize(14, MemoryUnit.GB), refineMV[Positive](16), n2Option, false, "n2-custom-16-16384"),
+      (MemorySize(1, MemoryUnit.GB), refineMV[Positive](1), n2Option, false, "n2-custom-2-1024"),
+      (MemorySize(1, MemoryUnit.GB), refineMV[Positive](4), n2Option, false, "n2-custom-4-2048"),
+      (MemorySize(14, MemoryUnit.GB), refineMV[Positive](16), n2Option, false, "n2-custom-16-14336"),
+      (MemorySize(8, MemoryUnit.GB), refineMV[Positive](16), n2Option, false, "n2-custom-16-8192"),
       (MemorySize(13.65, MemoryUnit.GB), refineMV[Positive](1), n2Option, false, "n2-custom-2-14080"),
-      (MemorySize(1520.96, MemoryUnit.MB), refineMV[Positive](1), n2Option, false, "n2-custom-2-2048"),
-      (MemorySize(1024.0, MemoryUnit.MB), refineMV[Positive](1), n2Option, false, "n2-custom-2-2048"),
-      (MemorySize(2, MemoryUnit.GB), refineMV[Positive](33), n2Option, false, "n2-custom-36-36864"),
+      (MemorySize(1520.96, MemoryUnit.MB), refineMV[Positive](1), n2Option, false, "n2-custom-2-1536"),
+      (MemorySize(1024.0, MemoryUnit.MB), refineMV[Positive](1), n2Option, false, "n2-custom-2-1024"),
+      (MemorySize(2, MemoryUnit.GB), refineMV[Positive](33), n2Option, false, "n2-custom-36-18432"),
 
       // Same tests but with AMD Rome (n2d) #cpu > 16 are in increments of 16  
       (MemorySize(1024, MemoryUnit.MB), refineMV[Positive](1), n2dOption, false, "n2d-custom-2-1024"),
