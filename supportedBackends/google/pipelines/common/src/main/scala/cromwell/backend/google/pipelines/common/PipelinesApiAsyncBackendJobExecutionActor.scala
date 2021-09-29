@@ -882,8 +882,7 @@ class PipelinesApiAsyncBackendJobExecutionActor(override val standardParams: Sta
         else {
           val msg = s"$baseMsg The maximum number of preemptible attempts ($maxPreemption) has been reached. The " +
             s"call will be restarted with a non-preemptible VM. Error code $errorCode.$prettyPrintedError)"
-          FailedRetryableExecutionHandle(StandardException(
-            errorCode, msg, jobTag, jobReturnCode, standardPaths.error), jobReturnCode, kvPairsToSave = Option(preemptionAndUnexpectedRetryCountsKvPairs))
+          handleUnexpectedTermination(errorCode, msg, jobReturnCode)
         }
       case Invalid(_) =>
         FailedNonRetryableExecutionHandle(
