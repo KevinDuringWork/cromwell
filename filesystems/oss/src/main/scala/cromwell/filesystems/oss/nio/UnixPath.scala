@@ -66,7 +66,7 @@ final case class UnixPath(path: String) extends CharSequence
 
   def isAbsolute = UnixPath.isAbsolute(path)
 
-  def isEmpty = path.isEmpty
+  override def isEmpty = path.isEmpty
 
   def hasTrailingSeparator = UnixPath.hasTrailingSeparator(path)
 
