@@ -1,5 +1,66 @@
 # Cromwell Change Log
 
+## 75 Release Notes
+
+### New `AwaitingCloudQuota` backend status
+
+For Cloud Life Sciences v2beta only.
+
+When a user's GCP project reaches a quota limit, Cromwell continues to submit jobs and Life Sciences acknowledges them as created even if the physical VM cannot yet start. Cromwell now detects this condition in the backend and reports `AwaitingCloudQuota`.
+
+The status is informational and does not require any action. Users wishing to maximize throughput can use `AwaitingCloudQuota` as an indication they should check quota in Cloud Console and request a quota increase from GCP.
+
+`AwaitingCloudQuota` will appear between the `Initializing` and `Running` backend statuses, and will be skipped if not applicable.
+
+Now:
+
+| Status in metadata |Quota normal| Quota delay          | Status meaning                                    |
+|--------------------|----|----------------------|---------------------------------------------------|
+| `executionStatus`    |`Running`| `Running`            | Job state Cromwell is requesting from the backend |
+| `backendStatus`      |`Running`| `AwaitingCloudQuota` | Job state reported by backend                          |
+
+Previously:
+
+| Status in metadata |Quota normal|Quota delay| Status meaning                                            |
+|--------------------|----|----|-----------------------------------------------------------|
+| `executionStatus`    |`Running`|`Running`| Job state Cromwell is requesting from the backend |
+| `backendStatus`      |`Running`|`Running`| Job state reported by backend |
+
+### New 'requestedWorkflowId' API Option
+
+Allows users to choose their own workflow IDs at workflow submission time. 
+
+If supplied for single workflows, this value must be a JSON string containing a valid, and not already used, UUID. For batch submissions, this value must be a JSON array of valid UUIDs.
+
+If not supplied, the behavior is as today: Cromwell will generate a random workflow ID for every workflow submitted. 
+
+### Bug Fixes
+
+* Fixed a bug on Google Pipelines API backends where missing optional output files (`File?`) were not correctly detected by Cromwell and caused invalid call cache entries to be written.
+
+## 73 Release Notes
+
+### Workflow Restart Performance Improvements
+
+Cromwell now allows for improved performance restarting large workflows through the use of a separate rate limiter for restart checks than the rate limiter used for starting new jobs.
+The restart check rate limiter is pre-configured in Cromwell's bundled [reference.conf](https://github.com/broadinstitute/cromwell/blob/develop/core/src/main/resources/reference.conf); see the `job-restart-check-rate-control` stanza in that file for explanations of the various parameters if adjustments are desired.
+
+## 71 Release Notes
+
+### Bug Fixes
+
+* Fixed an issue handling data in Google Cloud Storage buckets with requester pays enabled that could sometimes cause I/O to fail.
+
+## 70 Release Notes
+
+### CWL security fix [#6510](https://github.com/broadinstitute/cromwell/pull/6510)
+
+Fixed an issue that could allow submission of an untrusted CWL file to initiate remote code execution. The vector was improper deserialization of the YAML source file.
+
+CWL execution is enabled by default unless a `CWL` [stanza](https://github.com/broadinstitute/cromwell/blob/develop/core/src/main/resources/reference.conf#L460-L482) is present in the configuration that specifies `enabled: false`. Cromwell instances with CWL disabled were not affected. Consequently, users who wish to mitigate the vulnerability without upgrading Cromwell may do so via this config change.
+
+- Thank you to [Bruno P. Kinoshita](https://github.com/kinow) who first found the issue in a different CWL project ([CVE-2021-41110](https://github.com/common-workflow-language/cwlviewer/security/advisories/GHSA-7g7j-f5g3-fqp7)) and [Michael R. Crusoe](https://github.com/mr-c) who suggested we investigate ours.
+
 ## 68 Release Notes
 
 ### Virtual Private Cloud
